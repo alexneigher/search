@@ -1,0 +1,2 @@
+class ProductSearch < ApplicationRecord
+end
