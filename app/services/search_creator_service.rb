@@ -15,11 +15,12 @@ class SearchCreatorService
   private
 
     def populate_product_search_and_results(data)
-      raise "API Error" unless data["results"].present?
+      api_results = data["results"]
+      raise "API Error" unless api_results.present?
 
       product_search = ActiveRecord::Base.transaction do
                         product_search = create_or_refresh_product_search
-                        populate_results(product_search, data)
+                        populate_results(product_search, api_results)
                         return product_search
                        end
 
@@ -39,13 +40,23 @@ class SearchCreatorService
       return product_search
     end
 
-    def populate_results(product_search, data)
+    def populate_results(product_search, api_results)
       results = []
-      
-      50.times do
-        results << product_search.results.new(description: 'hey')
+
+      api_results.each do |api_result|
+        results << product_search
+                    .results
+                    .new(
+                      description: api_result["description"],
+                      features: api_result["features"],
+                      site_details: api_result["sitedetails"],
+                      price: api_result["price"],
+                      image_url: api_result["images"].first
+                    )
       end
 
+      # batch create, avoids n+1 on INSERT
+      # see https://github.com/zdennis/activerecord-import
       Result.import results
     end
 

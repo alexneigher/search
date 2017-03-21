@@ -13,7 +13,16 @@ RSpec.describe SearchCreatorService do
     search_creator_service.perform
     product_search = ProductSearch.first
     expect(product_search.query).to eq 'iphone'
-    expect(product_search.results.count).to eq 1
+  end
+
+  it 'creates a proper record for a result' do
+    first_result = search_creator_service.perform.results.first
+
+    expect(first_result.description).to eq product_data['description']
+    expect(first_result.features).to eq product_data['features']
+    expect(first_result.site_details).to eq product_data['sitedetails']
+    expect(first_result.price).to eq product_data['price'].to_f
+    expect(first_result.image_url).to eq product_data['images'].first
   end
 
 
