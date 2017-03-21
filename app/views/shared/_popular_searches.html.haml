@@ -2,6 +2,8 @@
   %h3.popular-searches-header Popular Searches
   //show recently cached searches
   %ul.list-group
-    =link_to "#" do
-      %li.list-group-item
-        Sha
+    - @popular_searches.each do |search|
+
+      = link_to search_path(search.query) do
+        %li.list-group-item
+          = search.query.titleize

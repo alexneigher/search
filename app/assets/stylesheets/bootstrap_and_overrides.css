@@ -5,6 +5,14 @@
   =require twitter-bootstrap-static/sprites
 */
 
-.popular-searches-header{
+.popular-searches-header {
   margin-top: 0;
+}
+
+.preview-image {
+  max-width: 50px;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
 }

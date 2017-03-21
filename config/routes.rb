@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  resources :searches
+  resources :searches, param: :query
 
   root 'searches#new'
 end

@@ -1,6 +1,17 @@
-%ul.list-group
-- results.each do |result|
-  %li.list-group-item
-    = result.description
-    | 
-    = result.id
+.table-responsive
+  %table.table
+    - results.each do |result|
+      %tr
+        %td
+          = image_tag result.image_url, class: 'preview-image'
+        %td
+          = link_to result.remote_url, target: '_blank' do
+            = result.description
+        %td.text-right
+          = number_to_currency(result.price)
+
+
+    - if results.length.zero?
+      %tr
+        %td
+          No results :(

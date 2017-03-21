@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20170321192726) do
 
   create_table "results", force: :cascade do |t|
     t.integer  "product_search_id"
-    t.jsonb    "site_details",      default: {},    null: false
-    t.jsonb    "features",          default: {},    null: false
+    t.jsonb    "site_details",      default: {}
+    t.jsonb    "features",          default: {}
     t.decimal  "price",             default: "0.0"
     t.text     "description"
     t.string   "image_url"

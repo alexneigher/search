@@ -8,7 +8,15 @@ class SearchCreatorService
 
   def perform
     sem3.products_field("search", @query)
-    data = sem3.get_products()
+
+    #guard against failed external call
+    begin
+      data = sem3.get_products()
+    rescue => e
+      #push to airbrake or other error service :)
+      return 'No connection'
+    end
+
     populate_product_search_and_results(data)
   end
 
@@ -18,6 +26,7 @@ class SearchCreatorService
       api_results = data["results"]
       raise "API Error" unless api_results.present?
 
+      # Wrap in transaction, so we dont wipe away old cache if error occurs
       product_search = ActiveRecord::Base.transaction do
                         product_search = create_or_refresh_product_search
                         populate_results(product_search, api_results)
@@ -30,6 +39,7 @@ class SearchCreatorService
       product_search = ProductSearch.expired_result_for(@query)
       
       if product_search.present?
+        #refresh existing
         product_search.cached_at = Date.current
         product_search.results.destroy_all #TODO, can refactor into SQL "delete from results, where..."
       else

@@ -13,7 +13,7 @@ class SearchService
       product_search = create_or_populate_product_search!
     end
 
-    product_search.results
+    product_search.try(:results) || [] #if api connection drops
   end
 
   private
