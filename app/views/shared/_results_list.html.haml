@@ -3,10 +3,11 @@
     - results.each do |result|
       %tr
         %td
-          = image_tag result.image_url, class: 'preview-image'
+          - unless result.image_url.nil?
+            = image_tag result.image_url, class: 'preview-image'
         %td
           = link_to result.remote_url, target: '_blank' do
-            = result.description
+            = result.description || 'Learn More'
         %td.text-right
           = number_to_currency(result.price)
 

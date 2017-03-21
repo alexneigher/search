@@ -4,6 +4,6 @@
       .input-group
         = f.text_field :query, class: 'form-control', placeholder: 'Enter Search Here! ex: iPhone'
         %span.input-group-btn
-          = f.submit 'Search', class: 'btn btn-primary'
+          = f.button 'Search', class: 'btn btn-primary submit-btn', data: {disable_with: "<i class='fa fa-refresh fa-spin'>".html_safe}
 
     #search-results
