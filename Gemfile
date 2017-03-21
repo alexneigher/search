@@ -18,6 +18,10 @@ gem 'semantics3'
 gem 'haml', '~> 4.0', '>= 4.0.7'
 gem "twitter-bootstrap-rails"
 gem "font-awesome-rails"
+
+# Speedy Batch inserts
+gem 'activerecord-import'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
