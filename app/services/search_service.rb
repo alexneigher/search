@@ -10,7 +10,7 @@ class SearchService
     if cached_product_search.present?
       product_search = cached_product_search
     else
-      product_search = create_product_search!
+      product_search = create_or_populate_product_search!
     end
 
     product_search.results
@@ -24,11 +24,10 @@ class SearchService
 
       @cached_product_search ||= ProductSearch
                                   .includes(:results)
-                                  .where(query: search_query)
-                                  .where('cached_at >= ?', 7.days.ago)
+                                  .cached_result_for(search_query)
     end
 
-    def create_product_search!
+    def create_or_populate_product_search!
       SearchCreatorService.new(search_query).perform
     end
 end
