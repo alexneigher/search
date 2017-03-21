@@ -17,13 +17,13 @@ class SearchCreatorService
     def populate_product_search_and_results(data)
       raise "API Error" unless data["results"].present?
 
-      product_search = create_or_refresh_product_search
-
-      5.times do
-        product_search.results.build(description: 'description')
+      ActiveRecord::Base.transaction do
+        product_search = create_or_refresh_product_search
+        populate_results(product_search.id, data)
       end
 
-      return product_search if product_search.save!
+      
+      product_search
     end
 
     def create_or_refresh_product_search
@@ -38,6 +38,23 @@ class SearchCreatorService
       end
 
       return product_search
+    end
+
+    def populate_results(product_search_id, data)
+      results = []
+      
+      50.times do
+        description = "hey"
+
+        results << "(#{product_search_id}, hey)"
+      end
+
+      sql_results = results.join(",")
+
+      #batch insert to avoic n+1  using active record ".create"
+      ActiveRecord::Base
+        .connection
+        .execute("INSERT INTO results (product_search_id, description) VALUES #{sql_results}")
     end
 
     def sem3
