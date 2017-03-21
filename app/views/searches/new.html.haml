@@ -1,0 +1,7 @@
+.panel.panel-default
+  .panel-body
+    = form_for :search, url: searches_path, method: :post do |f|
+      .input-group
+        = f.text_field :query, class: 'form-control', placeholder: 'Enter Search Here! ex: iPhone'
+        %span.input-group-btn
+          = f.submit 'Search', class: 'btn btn-primary'

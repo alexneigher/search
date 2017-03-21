@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  root 'search#new'
+  
+  resources :searches
+
+  root 'searches#new'
 end
