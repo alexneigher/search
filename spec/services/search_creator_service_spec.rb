@@ -11,7 +11,9 @@ RSpec.describe SearchCreatorService do
 
   it 'creates a new product search for the query string' do
     search_creator_service.perform
-    expect(ProductSearch.first.query).to eq 'iphone'
+    product_search = ProductSearch.first
+    expect(product_search.query).to eq 'iphone'
+    expect(product_search.results.count).to eq 1
   end
 
 

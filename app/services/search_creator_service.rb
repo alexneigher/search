@@ -9,7 +9,7 @@ class SearchCreatorService
   def perform
     sem3.products_field( "search", @query )
     data = sem3.get_products()
-    ProductSearch.create(query: @query)
+    #ProductSearch.create(query: @query)
   end
 
   private
