@@ -15,10 +15,6 @@ class ProductSearch < ApplicationRecord
     recently_cached.find_by(query: query)
   end
 
-  def self.expired_result_for(query)
-    cache_expired.find_by(query: query)
-  end
-
   def cache_expiration_date
     self.cached_at + 7.days
   end
