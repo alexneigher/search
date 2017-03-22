@@ -22,4 +22,21 @@ RSpec.describe ProductSearch, type: :model do
     end
   end
 
+  describe "#reset_cache" do
+    let!(:result){ Result.create(product_search_id: expired_product_search.id) }
+
+    it 'should set the cached_at to now' do
+      expect{
+        expired_product_search.reset_cache
+      }
+      .to change(expired_product_search, :cached_at)
+      .to(Date.current)
+    end
+
+    it 'should remove all associated results' do
+      expired_product_search.reset_cache
+      expect(expired_product_search.reload.results).to eq ([])
+    end
+  end
+
 end

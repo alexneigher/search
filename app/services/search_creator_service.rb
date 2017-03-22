@@ -39,9 +39,7 @@ class SearchCreatorService
       product_search = ProductSearch.find_by_query(@query)
       
       if product_search.present?
-        #refresh existing
-        product_search.update(cached_at: Date.current)
-        product_search.results.destroy_all #TODO, can refactor into SQL "delete from results, where..."
+        product_search.reset_cache
       else
         #create a new one
         product_search = ProductSearch.create(query: @query, cached_at: Date.current)

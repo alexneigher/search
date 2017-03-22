@@ -19,4 +19,10 @@ class ProductSearch < ApplicationRecord
     self.cached_at + 7.days
   end
 
+  def reset_cache
+    #refresh existing
+    update(cached_at: Date.current)
+    results.destroy_all #TODO, can refactor into SQL "delete from results, where..."
+  end
+
 end
