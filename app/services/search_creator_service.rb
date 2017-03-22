@@ -24,7 +24,7 @@ class SearchCreatorService
 
     def populate_product_search_and_results(data)
       api_results = data["results"]
-      raise "API Error" unless api_results.present?
+      return [] unless api_results.present?
 
       # Wrap in transaction, so we dont wipe away old cache if error occurs
       product_search = ActiveRecord::Base.transaction do
