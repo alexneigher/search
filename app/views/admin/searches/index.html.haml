@@ -13,3 +13,8 @@
       .panel-body
         %ul.list-group
           = render partial: 'shared/admin/product_search_list', collection: @expired_product_searches, as: :product_search
+
+
+.row
+  .col-md-6
+    = link_to "Add New", new_admin_search_path, remote: true, class: 'btn btn-primary'

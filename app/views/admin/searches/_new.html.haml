@@ -1,0 +1,15 @@
+.modal-dialog
+  / Modal content
+  .modal-content
+    .modal-header
+      %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      %h4.modal-title Create New Product Search
+    = form_for @product_search, url: admin_searches_path, method: :post do |f|
+
+      .modal-body
+
+        %label Search Query
+        = f.text_field :query, class: 'form-control'
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        = f.submit 'Create', class: 'btn btn-primary'
