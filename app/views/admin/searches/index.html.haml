@@ -1,1 +1,15 @@
-index.html.haml
+.row
+  .col-md-6
+    .panel.panel-success
+      .panel-heading
+        Cached Results
+      .panel-body
+        %ul.list-group
+          = render partial: 'shared/admin/product_search_list', collection: @cached_product_searches, as: :product_search
+  .col-md-6
+    .panel.panel-danger
+      .panel-heading
+        Expired Results
+      .panel-body
+        %ul.list-group
+          = render partial: 'shared/admin/product_search_list', collection: @expired_product_searches, as: :product_search

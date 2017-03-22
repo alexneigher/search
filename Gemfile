@@ -19,6 +19,12 @@ gem 'haml', '~> 4.0', '>= 4.0.7'
 gem "twitter-bootstrap-rails"
 gem "font-awesome-rails"
 
+#Background tasks
+gem 'sidekiq'
+
+# Running multiple servers locally
+gem 'foreman'
+
 # Speedy Batch inserts
 gem 'activerecord-import'
 

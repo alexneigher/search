@@ -1,0 +1,6 @@
+- # simply push the cached_at date back 2 weeks, maybe refactor to add expired: true column?
+
+= link_to 'Force Expire Cache', 
+            admin_search_path(product_search: {cached_at: 2.weeks.ago}),
+            method: :put,
+            class: 'btn btn-danger'

@@ -36,11 +36,11 @@ class SearchCreatorService
     end
 
     def create_or_refresh_product_search
-      product_search = ProductSearch.expired_result_for(@query)
+      product_search = ProductSearch.find_by_query(@query)
       
       if product_search.present?
         #refresh existing
-        product_search.cached_at = Date.current
+        product_search.update(cached_at: Date.current)
         product_search.results.destroy_all #TODO, can refactor into SQL "delete from results, where..."
       else
         #create a new one

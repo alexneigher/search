@@ -6,7 +6,6 @@ class ProductSearch < ApplicationRecord
 
   validates_uniqueness_of :query #only one search per term (will either be fresh or expired)
 
-
   def self.popular_searches
     #render the top 5 most recently cached results
     recently_cached.order(:cached_at).limit(5)
@@ -19,4 +18,9 @@ class ProductSearch < ApplicationRecord
   def self.expired_result_for(query)
     cache_expired.find_by(query: query)
   end
+
+  def cache_expiration_date
+    self.cached_at + 7.days
+  end
+
 end

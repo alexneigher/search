@@ -8,6 +8,10 @@ Bundler.require(*Rails.groups)
 
 module Search
   class Application < Rails::Application
+
+    #for background caching
+    config.active_job.queue_adapter = :sidekiq
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

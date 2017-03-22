@@ -1,0 +1,22 @@
+.modal-dialog
+  / Modal content
+  .modal-content
+    .modal-header
+      %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      %h4.modal-title Results for #{@product_search.query}
+    .modal-body
+
+      %label Cached at:
+      = @product_search.cached_at
+      = "(Expire at: #{@product_search.cache_expiration_date})"
+      %br
+      %label results count:
+      = @product_search.results.length
+    %hr
+      .modal-body
+        = link_to 'Fetch and cache new results', admin_search_fetch_new_cache_path(@product_search), method: :put, class: 'btn btn-default'
+
+        = render partial: 'shared/admin/force_expire_button'
+        
+    .modal-footer
+      %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

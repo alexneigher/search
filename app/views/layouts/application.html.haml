@@ -19,6 +19,9 @@
           %span.icon-bar
           %span.icon-bar
         = link_to 'Search', root_path, class: 'navbar-brand'
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav
+            %li= link_to "Admin", admin_searches_path
     .container
       .row
         .col-sm-9

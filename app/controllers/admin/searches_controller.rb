@@ -3,9 +3,34 @@ module Admin
     layout 'admin'
 
     def index
-      @cached_product_searches = ProductSearch.includes(:results).recently_cached
-      @expired_product_searches = ProductSearch.includes(:results).cache_expired
+      @cached_product_searches = ProductSearch.recently_cached
+      @expired_product_searches = ProductSearch.cache_expired
     end
+
+    def show
+      @product_search = ProductSearch.find(params[:id])
+    end
+
+    def update
+      @product_search = ProductSearch.find(params[:id])
+      @product_search.update(admin_product_search_params)
+      redirect_to admin_searches_path
+    end
+
+    #non restful route
+    def fetch_new_cache
+      @product_search = ProductSearch.find(params[:search_id])
+      query = @product_search.query
+      
+      PrefetchCacheJob.perform_later(query)
+      flash[:notice] = 'This task may take some time'
+      redirect_to admin_searches_path
+    end
+
+    private
+      def admin_product_search_params
+        params.require(:product_search).permit(:cached_at)
+      end
 
   end
 

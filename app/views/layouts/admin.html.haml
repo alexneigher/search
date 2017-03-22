@@ -19,6 +19,9 @@
           %span.icon-bar
           %span.icon-bar
         = link_to 'Search', root_path, class: 'navbar-brand'
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav
+            %li.active= link_to "Admin", admin_searches_path
     .container
       .row
         .alert.alert-danger
@@ -27,4 +30,5 @@
         .col-sm-12
           = bootstrap_flash
           = yield
-          
+
+    #modal.modal.fade
