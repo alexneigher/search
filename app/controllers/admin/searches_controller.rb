@@ -25,11 +25,11 @@ module Admin
       if admin_product_search_params[:query].empty?
         flash[:danger] = 'You need a term!'
       else
-        
+
         PrefetchCacheJob.perform_later(admin_product_search_params[:query])
         flash[:warning] = 'Fetching and caching the results now!'
       end
-      
+
       redirect_to admin_searches_path
     end
 
@@ -37,11 +37,11 @@ module Admin
     def fetch_new_cache
       @product_search = ProductSearch.find(params[:search_id])
       query = @product_search.query
-      
+
       PrefetchCacheJob.perform_later(query)
 
       flash[:warning] = 'This task may take some time'
-      
+
       redirect_to admin_searches_path
     end
 
