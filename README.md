@@ -41,4 +41,4 @@
 
 * Currently I call `destroy_all` during a re-saturation of `results` for a particular `product_search`
   * This produces a `DELETE FROM` query for *each* associated `result` record, which is an `n+1` situation :(
-* Did not implement pagination, however, based on the docs for he `semantic3` gem, it appears as though one might pass through an `offset` parameter into the `get_products()` endpoint.
+* Did not implement pagination, however, based on the docs for the `semantic3` gem, it appears as though one might pass through an `offset` parameter into the `get_products()` endpoint.
