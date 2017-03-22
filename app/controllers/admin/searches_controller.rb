@@ -23,7 +23,9 @@ module Admin
       query = @product_search.query
       
       PrefetchCacheJob.perform_later(query)
-      flash[:notice] = 'This task may take some time'
+
+      flash[:warning] = 'This task may take some time'
+      
       redirect_to admin_searches_path
     end
 

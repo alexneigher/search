@@ -9,21 +9,31 @@ RSpec.describe SearchCreatorService do
 
   let(:search_creator_service){ SearchCreatorService.new('iphone') }
 
-  it 'creates a new product search for the query string' do
-    search_creator_service.perform
-    product_search = ProductSearch.first
-    expect(product_search.query).to eq 'iphone'
+  context 'when a product_search exists for that query' do
+    let!(:expired_search){ ProductSearch.create(query: 'iphone', cached_at: 3.months.ago ) }
+
+    it 'refreshes the cache date for that query' do
+      search_creator_service.perform
+      expect(expired_search.reload.cached_at).to eq Date.current
+    end
   end
 
-  it 'creates a proper record for a result' do
-    first_result = search_creator_service.perform.results.first
+  context 'when no product search exists for that query' do
+    it 'creates a new product search for the query string' do
+      search_creator_service.perform
+      product_search = ProductSearch.first
+      expect(product_search.query).to eq 'iphone'
+    end
 
-    expect(first_result.description).to eq product_data['description']
-    expect(first_result.features).to eq product_data['features']
-    expect(first_result.site_details).to eq product_data['sitedetails']
-    expect(first_result.price).to eq product_data['price'].to_f
-    expect(first_result.image_url).to eq product_data['images'].first
+    it 'creates a proper record for a result' do
+      first_result = search_creator_service.perform.results.first
+
+      expect(first_result.description).to eq product_data['description']
+      expect(first_result.features).to eq product_data['features']
+      expect(first_result.site_details).to eq product_data['sitedetails']
+      expect(first_result.price).to eq product_data['price'].to_f
+      expect(first_result.image_url).to eq product_data['images'].first
+    end
   end
-
 
 end
